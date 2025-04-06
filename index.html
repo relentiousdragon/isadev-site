@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent - Developer Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+        
+        img {
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.alert {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 25px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    transform: translateX(200%);
+    transition: transform 0.3s ease-out;
+    display: flex;
+    align-items: center;
+    max-width: 400px;
+}
+
+.alert.show {
+    transform: translateX(0);
+}
+
+.alert.hide {
+    transform: translateX(200%);
+}
+
+.alert i {
+    margin-right: 10px;
+    font-size: 1.2rem;
+}
+
+.alert-success {
+    background-color: #3BA55D;
+    color: white;
+}
+
+.alert-error {
+    background-color: #ED4245;
+    color: white;
+}
+
+.alert-warning {
+    background-color: #FAA61A;
+    color: white;
+}
+
+.alert-info {
+    background-color: #5865F2;
+    color: white;
+}
+        :root {
+            --crimson: #dc2626;
+            --crimson-dark: #991b1b;
+            --crimson-light: #f87171;
+            --black: #0a0a0a;
+            --black-light: #171717;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--black);
+            color: #f5f5f5;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+        
+        .bg-crimson {
+            background-color: var(--crimson);
+        }
+        
+        .bg-black {
+            background-color: var(--black);
+        }
+        
+        .bg-black-light {
+            background-color: var(--black-light);
+        }
+        
+        .text-crimson {
+            color: var(--crimson);
+        }
+        
+        .text-crimson-light {
+            color: var(--crimson-light);
+        }
+        
+        .border-crimson {
+            border-color: var(--crimson);
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, var(--black-light) 0%, var(--black) 100%);
+        }
+        
+        .card-glass {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(220, 38, 38, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(220, 38, 38, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .card-glass:hover {
+            border-color: var(--crimson);
+            box-shadow: 0 0 20px rgba(220, 38, 38, 0.5);
+        }
+        
+        .skill-badge {
+            background-color: var(--black-light);
+            transition: all 0.3s ease;
+        }
+        
+        .skill-badge:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(220, 38, 38, 0.3);
+            border: 1px solid rgba(220, 38, 38, 0.5);
+        }
+        
+        .project-card {
+            transition: all 0.3s ease;
+            border: 1px solid rgba(220, 38, 38, 0.2);
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(220, 38, 38, 0.3);
+            border-color: var(--crimson);
+        }
+        
+        .status-online {
+            background-color: #3BA55D;
+        }
+        
+        .status-idle {
+            background-color: #FAA61A;
+        }
+        
+        .status-dnd {
+            background-color: #ED4245;
+        }
+        
+        .status-offline {
+            background-color: #747F8D;
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .btn-primary {
+            background-color: var(--crimson);
+            color: white;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--crimson-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px -5px rgba(220, 38, 38, 0.4);
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: all 0.5s ease;
+            z-index: -1;
+        }
+        
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: white;
+            border: 1px solid var(--crimson);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(220, 38, 38, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px -5px rgba(220, 38, 38, 0.2);
+        }
+        
+        .swoosh {
+            position: absolute;
+            width: 200%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, rgba(220, 38, 38, 0.1) 0%, transparent 70%);
+            transform: rotate(-10deg);
+            z-index: 0;
+        }
+        
+        .swoosh-1 {
+            top: 20%;
+            left: -50%;
+            animation: swooshMove 25s linear infinite;
+        }
+        
+        .swoosh-2 {
+            top: 60%;
+            right: -50%;
+            animation: swooshMove 30s linear infinite reverse;
+        }
+        
+        @keyframes swooshMove {
+            0% { transform: translateX(0) rotate(-10deg); }
+            100% { transform: translateX(50%) rotate(-10deg); }
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--crimson), transparent);
+            border-radius: 2px;
+        }
+        
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 1s ease-in forwards;
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        
+        .slide-up {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 0.8s ease-out forwards;
+        }
+        
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .slide-right {
+            opacity: 0;
+            transform: translateX(-20px);
+            animation: slideRight 0.8s ease-out forwards;
+        }
+        
+        @keyframes slideRight {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .slide-left {
+            opacity: 0;
+            transform: translateX(20px);
+            animation: slideLeft 0.8s ease-out forwards;
+        }
+        
+        @keyframes slideLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+        .delay-5 { animation-delay: 1s; }
+        
+        .fire-particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: #ff6600;
+            border-radius: 50%;
+            filter: blur(1px);
+            opacity: 0;
+        }
+        
+        .star-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background-color: white;
+            border-radius: 50%;
+            opacity: 0;
+        }
+        
+        .about-bg {
+            background-image: url('/crimson.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+        }
+        
+        .about-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        
+        
+        .alert.show {
+            transform: translateX(0);
+        }
+        
+        .alert.hide {
+            transform: translateX(200%);
+        }
+        
+        .vanta-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--crimson);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .hamburger {
+            transition: all 0.3s ease;
+        }
+        
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+        
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+        
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
+            40% { transform: translateY(-20px) translateX(-50%); }
+            60% { transform: translateY(-10px) translateX(-50%); }
+        }
+        
+        .tooltip {
+            position: relative;
+        }
+        
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 120px;
+            background-color: var(--black-light);
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            border: 1px solid var(--crimson);
+        }
+        
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        .modal {
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            transform: scale(0.8);
+            transition: all 0.3s ease;
+        }
+        
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+        
+        .banner-info {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 24px;
+            height: 24px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        
+        .banner-info-tooltip {
+            position: absolute;
+            top: 40px;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            display: none;
+        }
+        
+        .banner-info:hover .banner-info-tooltip {
+            display: block;
+        }
+        
+        .cheese-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            cursor: pointer;
+        }
+        
+        .cheese {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.2s;
+        }
+        
+        .cheese:hover {
+            transform: scale(1.05);
+        }
+        
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .project-banner {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .project-pfp {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            position: absolute;
+            bottom: -40px;
+            right: 20px;
+            border: 3px solid white;
+            object-fit: cover;
+        }
+
+        .lua-icon {
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTYgMjU2Ij48cmVjdCB3aWR0aD0iMjU2IiBoZWlnaHQ9IjI1NiIgZmlsbD0iIzAwMDA4MCIvPjxwYXRoIGQ9Ik0xMjggMTI4bC0xNi0xNi0xNi0xNi0xNi0xNi0xNi0xNnYxMjhsMTYgMTYgMTYgMTYgMTYgMTYgMTYgMTZ2LTEyOHoiIGZpbGw9IiMwMDAwYTAiLz48cGF0aCBkPSJNMTI4IDEyOGwxNi0xNiAxNi0xNiAxNi0xNiAxNi0xNnYxMjhsLTE2IDE2LTE2IDE2LTE2IDE2LTE2IDE2di0xMjh6IiBmaWxsPSIjMDAwMGMwIi8+PHBhdGggZD0iTTEyOCAxMjhsLTE2IDE2LTE2IDE2LTE2IDE2LTE2IDE2di0xMjhsMTYtMTYgMTYtMTYgMTYtMTYgMTYtMTZ2MTI4eiIgZmlsbD0iIzAwMDBmZiIvPjxwYXRoIGQ9Ik0xMjggMTI4bDE2IDE2IDE2IDE2IDE2IDE2IDE2IDE2di0xMjhsLTE2LTE2LTE2LTE2LTE2LTE2LTE2LTE2djEyOHoiIGZpbGw9IiMwMDAwZTAiLz48L3N2Zz4=');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            width: 40px;
+            height: 40px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div id="vanta-bg" class="vanta-container"></div>
+
+    <nav class="fixed w-full z-50 bg-black bg-opacity-90 border-b border-crimson border-opacity-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <span class="text-xl font-bold text-white">Agent</span>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#home" class="nav-link px-3 py-2 text-sm font-medium text-white hover:text-crimson-light transition">Home</a>
+                        <a href="#about" class="nav-link px-3 py-2 text-sm font-medium text-gray-300 hover:text-white transition">About</a>
+                        <a href="#projects" class="nav-link px-3 py-2 text-sm font-medium text-gray-300 hover:text-white transition">Projects</a>
+                        <a href="#collaborations" class="nav-link px-3 py-2 text-sm font-medium text-gray-300 hover:text-white transition">Collaborations</a>
+                        <a href="#skills" class="nav-link px-3 py-2 text-sm font-medium text-gray-300 hover:text-white transition">Skills</a>
+                        <a href="#contact" class="nav-link px-3 py-2 text-sm font-medium text-gray-300 hover:text-white transition">Contact</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="menu-toggle" class="text-gray-300 hover:text-white focus:outline-none">
+                        <div class="hamburger w-6 flex flex-col justify-between items-center">
+                            <span class="block w-6 h-0.5 bg-white transition-all"></span>
+                            <span class="block w-6 h-0.5 bg-white mt-1.5 transition-all"></span>
+                            <span class="block w-6 h-0.5 bg-white mt-1.5 transition-all"></span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div id="mobile-menu" class="mobile-menu fixed inset-0 z-40 bg-black bg-opacity-95 pt-20">
+        <div class="px-2 pt-2 pb-3 space-y-4 sm:px-3">
+            <a href="#home" class="block px-3 py-4 rounded-md text-xl font-medium text-white hover:bg-black-light transition border-b border-crimson border-opacity-20">Home</a>
+            <a href="#about" class="block px-3 py-4 rounded-md text-xl font-medium text-gray-300 hover:text-white hover:bg-black-light transition border-b border-crimson border-opacity-20">About</a>
+            <a href="#projects" class="block px-3 py-4 rounded-md text-xl font-medium text-gray-300 hover:text-white hover:bg-black-light transition border-b border-crimson border-opacity-20">Projects</a>
+            <a href="#collaborations" class="block px-3 py-4 rounded-md text-xl font-medium text-gray-300 hover:text-white hover:bg-black-light transition border-b border-crimson border-opacity-20">Collaborations</a>
+            <a href="#skills" class="block px-3 py-4 rounded-md text-xl font-medium text-gray-300 hover:text-white hover:bg-black-light transition border-b border-crimson border-opacity-20">Skills</a>
+            <a href="#contact" class="block px-3 py-4 rounded-md text-xl font-medium text-gray-300 hover:text-white hover:bg-black-light transition border-b border-crimson border-opacity-20">Contact</a>
+        </div>
+    </div>
+
+    <section id="home" class="relative min-h-screen pt-32 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+        <div class="swoosh swoosh-1"></div>
+        <div class="swoosh swoosh-2"></div>
+        
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="md:w-1/2 mb-16 md:mb-0 slide-right delay-1">
+                    <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">Hey, I'm <span class="text-crimson">Agent</span></h1>
+                    <div class="text-xl md:text-2xl text-gray-300 mb-8">
+                        I'm a <span id="typed" class="text-crimson-light"></span>
+                    </div>
+                    <p class="text-gray-300 mb-8 max-w-lg text-lg">
+                        Full-stack developer specializing in Discord bots, web applications, and automation tools. 
+                        Passionate about creating efficient and user-friendly shtuff.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#projects" class="btn-primary px-8 py-4 rounded-md text-white font-medium">View Projects</a>
+                        <a href="#contact" class="btn-secondary px-8 py-4 rounded-md text-white font-medium">Contact Me</a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center relative slide-left delay-1">
+                    <div class="relative w-72 h-72 md:w-96 md:h-96 rounded-full bg-gradient-to-br from-crimson to-crimson-dark flex items-center justify-center floating">
+                        <div class="absolute inset-0 rounded-full bg-crimson opacity-20 animate-ping"></div>
+                        <div class="absolute inset-4 rounded-full bg-gradient-to-br from-crimson-dark to-black-light flex items-center justify-center">
+                            <img src="https://cdn.discordapp.com/avatars/715480269179584588/60461f994b71985b4bf7d9a3cf4ded43.png?format=webp&quality=lossless&width=998&height=998" 
+                                 alt="Profile" 
+                                 class="w-64 h-64 md:w-80 md:h-80 rounded-full object-cover border-4 border-white">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="scroll-indicator">
+            <a href="#about" class="text-gray-300 hover:text-white">
+                <i class="fas fa-chevron-down text-2xl"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Discord Status Section -->
+    <section class="py-12 px-4 sm:px-6 lg:px-8 bg-black-light slide-up delay-2">
+        <div class="max-w-7xl mx-auto">
+            <div class="card-glass rounded-xl p-6 shadow-lg">
+                <div class="flex flex-col md:flex-row items-center justify-between">
+                    <div class="flex items-center mb-4 md:mb-0">
+                        <div class="relative mr-4">
+                            <img src="https://cdn.discordapp.com/avatars/715480269179584588/60461f994b71985b4bf7d9a3cf4ded43.png?format=webp&quality=lossless&width=998&height=998" 
+                                 alt="Discord Avatar" 
+                                 class="w-16 h-16 rounded-full border-2 border-white">
+                            <div id="discord-status" class="absolute bottom-0 right-0 w-4 h-4 rounded-full border-2 border-white status-offline"></div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white">@agentzzrp</h3>
+                            <p id="discord-status-text" class="text-gray-200">Loading status...</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <a href="https://discord.com/users/715480269179584588" target="_blank" class="btn-primary px-6 py-3 rounded-md font-medium flex items-center">
+                            <i class="fab fa-discord mr-2"></i> View Discord Profile
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 px-4 sm:px-6 lg:px-8 about-bg relative overflow-hidden">
+        <div class="swoosh swoosh-1"></div>
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="text-center mb-16 fade-in delay-1">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-2 section-title">About Me</h2>
+            </div>
+            
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/3 mb-8 md:mb-0 flex justify-center slide-right delay-2">
+                    <div class="relative w-64 h-64 rounded-lg overflow-hidden border-4 border-crimson floating">
+                        <img src="https://cdn.discordapp.com/avatars/715480269179584588/60461f994b71985b4bf7d9a3cf4ded43.png?format=webp&quality=lossless&width=998&height=998" 
+                             alt="Profile" 
+                             class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <div class="md:w-2/3 md:pl-12 slide-left delay-2">
+                    <h3 class="text-2xl font-bold text-white mb-4">Full-Stack Developer & Bot Creator</h3>
+                    <p class="text-gray-300 mb-6 text-lg">
+                        I'm a passionate developer with expertise in creating Discord bots, web applications, and automation tools.
+                    </p>
+                    <p class="text-gray-300 mb-6 text-lg">
+                        My journey in development started with simple scripts and has evolved into complex applications used by hundreds of users. 
+                        I'm constantly learning new technologies and improving my skills to create better things.
+                    </p>
+                    <div class="flex flex-wrap gap-4 mb-8">
+                        <div class="flex items-center">
+                            <div class="w-3 h-3 rounded-full bg-green-500 mr-2"></div>
+                            <span class="text-gray-300">Available for freelance work</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-3 h-3 rounded-full bg-crimson mr-2"></div>
+                            <span class="text-gray-300">Open to collaborations</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8">
+                        <button id="termuxlabs-btn" class="btn-primary px-8 py-4 rounded-md text-white font-medium flex items-center">
+                            <i class="fas fa-flask mr-2"></i> TermuxLabs
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="termuxlabs-modal" class="modal fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70">
+        <div class="modal-content bg-black-light rounded-lg max-w-md w-full p-8 relative border border-crimson border-opacity-30">
+            <button id="close-modal" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="flex items-center mb-6">
+                <img src="https://cdn.discordapp.com/icons/1005773483093012521/a51f84eceb7858da60fa3407d96208f3.webp?size=160&quality=lossless" 
+                     alt="TermuxLabs" 
+                     class="w-16 h-16 rounded-full mr-4 border-2 border-crimson">
+                <h3 class="text-2xl font-bold text-white text-crimson">TermuxLabs</h3>
+            </div>
+            <p class="text-gray-300 mb-6 text-lg">We Make Stuff!</p>
+            <div class="flex justify-center space-x-6">
+                <div class="tooltip">
+                    <img src="https://images-ext-1.discordapp.net/external/M6uOwxTxb7jjpDbRqQVRAoo_a5g1qzzj99pIhQXnDkI/%3Fsize%3D4096/https/cdn.discordapp.com/avatars/1290722827099701382/69e65289dabad2923d4af532f9235572.png?format=webp&quality=lossless&width=192&height=192" 
+                         alt="Solaris" 
+                         class="w-12 h-12 rounded-full object-cover floating">
+                    <span class="tooltip-text">Solaris</span>
+                </div>
+                <div class="tooltip">
+                    <img src="https://images-ext-1.discordapp.net/external/bmizwbDbyhbP0kqhiTLlZl_16HyGq7UzJoPeMOFKzOo/%3Fsize%3D4096/https/cdn.discordapp.com/avatars/882645620861575219/4acd79cf47a68f18a93cf391d893e006.png?format=webp&quality=lossless&width=600&height=600" 
+                         alt="ElJhon" 
+                         class="w-12 h-12 rounded-full object-cover floating">
+                    <span class="tooltip-text">ElJhon</span>
+                </div>
+                <div class="tooltip">
+                    <img src="https://images-ext-1.discordapp.net/external/JMYy5IXi5doFtIOHyUpSs0UlZwIwCv18aFegen8PKMg/%3Fsize%3D4096/https/cdn.discordapp.com/avatars/985024262740008991/874574bcdb636347bb6cf369ab19a9d4.png?format=webp&quality=lossless&width=1200&height=1200" 
+                         alt="Jo" 
+                         class="w-12 h-12 rounded-full object-cover floating">
+                    <span class="tooltip-text">Jo</span>
+                </div>
+                <div class="tooltip">
+                    <img src="https://cdn.discordapp.com/avatars/715480269179584588/60461f994b71985b4bf7d9a3cf4ded43.png?format=webp&quality=lossless&width=998&height=998" 
+                         alt="Agent" 
+                         class="w-12 h-12 rounded-full object-cover floating">
+                    <span class="tooltip-text">Agent</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section id="projects" class="py-20 px-4 sm:px-6 lg:px-8 bg-black-light relative overflow-hidden">
+        <div class="swoosh swoosh-2"></div>
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="text-center mb-16 fade-in delay-1">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-2 section-title">My Projects</h2>
+                <p class="text-gray-300 mt-6 max-w-2xl mx-auto text-lg">Here are some of my notable projects, including Discord bots and web applications.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Chez Bot -->
+                <div class="project-card bg-black rounded-xl overflow-hidden shadow-lg animate-on-scroll">
+                    <div class="project-banner" style="background-image: url('https://cdn.discordapp.com/banners/832560351774113822/7df6fe620ee449bbb7f6c9bd95bb7a7c.png?size=1024&quality=lossless')" id="chez-bot-banner">
+                        <img src="https://cdn.discordapp.com/avatars/832560351774113822/837e127a9012325c92ff95187748c809.png?size=160&quality=lossless" 
+                             alt="Chez Bot" 
+                             class="project-pfp">
+                        <div class="absolute bottom-4 right-4 bg-crimson text-white text-xs px-2 py-1 rounded-full">Live</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-4">Chez Bot</h3>
+                        <p class="text-gray-300 mb-6">
+                            🧀 The ultimate restaurant management bot for Discord, letting you build the biggest burger empire. 
+                            Start with a tiny fast-food joint, hire staff, upgrade equipment, and compete with others.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-black-light text-gray-200 text-xs px-3 py-1 rounded-full">Discord.js</span>
+                            <span class="bg-black-light text-gray-200 text-xs px-3 py-1 rounded-full">MongoDB</span>
+                            <span class="bg-black-light text-gray-200 text-xs px-3 py-1 rounded-full">Economy</span>
+                        </div>
+                        <div class="flex flex-wrap gap-4">
+                            <a href="https://top.gg/bot/832560351774113822/vote" target="_blank" class="text-crimson-light hover:text-crimson flex items-center">
+                                <i class="fas fa-arrow-up mr-2"></i> Vote
+                            </a>
+                            <a href="https://discord.com/discovery/applications/832560351774113822" target="_blank" class="text-crimson-light hover:text-crimson flex items-center">
+                                <i class="fab fa-discord mr-2"></i> App Directory
+                            </a>
+                            <a href="https://cutt.ly/CheesyMayor" target="_blank" class="text-crimson-light hover:text-crimson flex items-center">
+                                <i class="fas fa-globe mr-2"></i> Website
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bot-Hosting Status Tracker -->
+                <div class="project-card bg-black rounded-xl overflow-hidden shadow-lg animate-on-scroll">
+                    <div class="project-banner" style="background-image: url('https://cdn.discordapp.com/banners/950296335746228225/c3bde58bf75e7df50d4b33d4aaaf551c.png?size=1024&quality=lossless')">
+                        <img src="https://cdn.discordapp.com/avatars/950296335746228225/3d31992705edf58f3e14684d0b585eae.png?size=160&quality=lossless" 
+                             alt="Bot-Hosting Status Tracker" 
+                             class="project-pfp">
+                        <div class="absolute bottom-4 right-4 bg-crimson text-white text-xs px-2 py-1 rounded-full">Live</div>
+                        <div class="banner-info">
+                            <i class="fas fa-info"></i>
+                            <div class="banner-info-tooltip">Banner and PFP from bot-hosting.net</div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-4">Bot-Hosting Status Tracker</h3>
+                        <p class="text-gray-300 mb-6">
+                            🚀 Check the uptime status of all bot-hosting nodes & sites anywhere in Discord! 
+                            Report nodes/sites for issues and get webhook alerts straight to your server.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-black-light text-gray-200 text-xs px-3 py-1 rounded-full">Discord.js</span>
+                            <span class="bg-black-light text-gray-200 text-xs px-3 py-1 rounded-full">API</span>
+                            <span class="bg-black-light text-gray-200 text-xs px-3 py-1 rounded-full">Monitoring</span>
+                        </div>
+                        <div class="flex gap-4">
+                            <a href="https://monitor.livestatustracker.com" target="_blank" class="text-crimson-light hover:text-crimson flex items-center">
+                                <i class="fas fa-globe mr-2"></i> Website
+                            </a>
+                            <a href="https://monitor.livestatustracker.com/api" target="_blank" class="text-crimson-light hover:text-crimson flex items-center">
+                                <i class="fas fa-code mr-2"></i> API
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Lunar -->
+                <div class="project-card bg-black rounded-xl overflow-hidden shadow-lg animate-on-scroll">
+                    <div class="project-banner" style="background-image: url('https://cdn.discordapp.com/banners/1286753303362801756/99664936c7e51d06392811ae8ecc8136.png?size=1024&quality=lossless')" id="lunar-banner">
+                        <img src="https://cdn.discordapp.com/avatars/1286753303362801756/a11a3cc8c70007fca9e9cd9270b2e893.png?size=160&quality=lossless" 
+                             alt="Lunar" 
+                             class="project-pfp">
+                        <div class="absolute bottom-4 right-4 bg-yellow-500 text-white text-xs px-2 py-1 rounded-full">WIP</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-4">Lunar</h3>
+                        <p class="text-gray-300 mb-6">
+                            A serverless Discord bot created on Cloudflare Workers. 
+                            Lightweight, scalable, and efficient with minimal latency and resource usage.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-black-light text-gray-200 text-xs px-3 py-1 rounded-full">Utility</span>
+                            <span class="bg-black-light text-gray-200 text-xs px-3 py-1 rounded-full">Serverless</span>
+                            <span class="bg-black-light text-gray-200 text-xs px-3 py-1 rounded-full">JavaScript</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Collaborations Section -->
+    <section id="collaborations" class="py-20 px-4 sm:px-6 lg:px-8 bg-black relative overflow-hidden">
+        <div class="swoosh swoosh-1"></div>
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="text-center mb-16 fade-in delay-1">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-2 section-title">Collaborations</h2>
+                <p class="text-gray-300 mt-6 max-w-2xl mx-auto text-lg">Projects I've contributed to as a developer.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- USF Bot -->
+                <div class="project-card bg-black-light rounded-xl overflow-hidden shadow-lg animate-on-scroll">
+                    <div class="project-banner" style="background-image: url('https://cdn.discordapp.com/banners/1090240246005907466/9617e1337d1eb6445cbe5bbe1d6c4376.png?size=1024&quality=lossless')" id="usf-banner">
+                        <img src="https://cdn.discordapp.com/avatars/1090240246005907466/ee1ff1b9bec6271d833dece3222b587b.png?size=160&quality=lossless" 
+                             alt="USF Bot" 
+                             class="project-pfp">
+                        <div class="absolute bottom-4 right-4 bg-crimson text-white text-xs px-2 py-1 rounded-full">Live</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-4">USF Bot</h3>
+                        <p class="text-gray-300 mb-6">
+                            Moderation, management, utility & fun! A feature-rich Discord bot with various utilities 
+                            for server management and entertainment.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-black text-gray-200 text-xs px-3 py-1 rounded-full">Discord.js</span>
+                            <span class="bg-black text-gray-200 text-xs px-3 py-1 rounded-full">Multipurpose</span>
+                            <span class="bg-black text-gray-200 text-xs px-3 py-1 rounded-full">Fun</span>
+                        </div>
+                        <div class="flex gap-4">
+                            <a href="https://github.com/DXS-International/USFBOT" target="_blank" class="text-crimson-light hover:text-crimson flex items-center">
+                                <i class="fab fa-github mr-2"></i> GitHub
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- SlimeGuard Bot -->
+                <div class="project-card bg-black-light rounded-xl overflow-hidden shadow-lg animate-on-scroll">
+                    <div class="h-48 bg-gradient-to-r from-green-600 to-lime-500 flex items-center justify-center relative">
+                        <img src="https://cdn.discordapp.com/avatars/1297272176734503095/da1f216f78ee9e6ff7154c63ca19f304.png?size=160&quality=lossless" 
+                             alt="USF Bot" 
+                             class="project-pfp">
+                        <div class="absolute bottom-4 right-4 bg-yellow-500 text-white text-xs px-2 py-1 rounded-full">WIP</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-4">SlimeGuard</h3>
+                        <p class="text-gray-300 mb-6">
+                            Multipurpose discord bot with a robust dashboard and a wide range of features.  
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-black text-gray-200 text-xs px-3 py-1 rounded-full">Discord.js</span>
+                            <span class="bg-black text-gray-200 text-xs px-3 py-1 rounded-full">Multipurpose</span>
+                            <span class="bg-black text-gray-200 text-xs px-3 py-1 rounded-full">Dashboard</span>
+                        </div>
+                        <div class="flex gap-4">
+                            <a href="https://discord.gg/TTbmmzmcUX" target="_blank" class="text-crimson-light hover:text-crimson flex items-center">
+                                <i class="fab fa-discord mr-2"></i> Discord Server
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="py-20 px-4 sm:px-6 lg:px-8 bg-black-light relative overflow-hidden">
+        <div class="swoosh swoosh-2"></div>
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="text-center mb-16 fade-in delay-1">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-2 section-title">My Skills</h2>
+                <p class="text-gray-300 mt-6 max-w-2xl mx-auto text-lg">Technologies and tools I'm proficient with</p>
+            </div>
+            
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                <div class="skill-badge p-6 rounded-lg flex flex-col items-center animate-on-scroll">
+                    <i class="fab fa-node-js text-4xl text-green-500 mb-2"></i>
+                    <span class="text-white font-medium">Node.js</span>
+                </div>
+                <div class="skill-badge p-6 rounded-lg flex flex-col items-center animate-on-scroll">
+                    <i class="fab fa-js-square text-4xl text-yellow-400 mb-2"></i>
+                    <span class="text-white font-medium">JavaScript</span>
+                </div>
+                <div class="skill-badge p-6 rounded-lg flex flex-col items-center animate-on-scroll">
+                    <i class="fab fa-html5 text-4xl text-orange-500 mb-2"></i>
+                    <span class="text-white font-medium">HTML5</span>
+                </div>
+                <div class="skill-badge p-6 rounded-lg flex flex-col items-center animate-on-scroll">
+                    <i class="fab fa-css3-alt text-4xl text-blue-500 mb-2"></i>
+                    <span class="text-white font-medium">CSS3</span>
+                </div>
+                <div class="skill-badge p-6 rounded-lg flex flex-col items-center animate-on-scroll">
+                    <i class="fab fa-python text-4xl text-blue-400 mb-2"></i>
+                    <span class="text-white font-medium">Python</span>
+                </div>
+                <div class="skill-badge p-6 rounded-lg flex flex-col items-center animate-on-scroll">
+                    <i class="fas fa-database text-4xl text-green-400 mb-2"></i>
+                    <span class="text-white font-medium">MongoDB</span>
+                </div>
+                <div class="skill-badge p-6 rounded-lg flex flex-col items-center animate-on-scroll">
+                    <div class="lua-icon mb-2"></div>
+                    <span class="text-white font-medium">Lua</span>
+                </div>
+                <div class="skill-badge p-6 rounded-lg flex flex-col items-center animate-on-scroll">
+                    <i class="fab fa-github text-4xl text-gray-200 mb-2"></i>
+                    <span class="text-white font-medium">GitHub</span>
+                </div>
+                <div class="skill-badge p-6 rounded-lg flex flex-col items-center animate-on-scroll">
+                    <i class="fas fa-terminal text-4xl text-gray-400 mb-2"></i>
+                    <span class="text-white font-medium">Batch</span>
+                </div>
+                <div class="skill-badge p-6 rounded-lg flex flex-col items-center animate-on-scroll">
+                    <i class="fas fa-server text-4xl text-purple-500 mb-2"></i>
+                    <span class="text-white font-medium">Express</span>
+                </div>
+                <div class="skill-badge p-6 rounded-lg flex flex-col items-center animate-on-scroll">
+                    <i class="fab fa-discord text-4xl text-indigo-400 mb-2"></i>
+                    <span class="text-white font-medium">Discord.js</span>
+                </div>
+                <div class="skill-badge p-6 rounded-lg flex flex-col items-center animate-on-scroll">
+                    <i class="fas fa-cloud text-4xl text-blue-300 mb-2"></i>
+                    <span class="text-white font-medium">Cloudflare</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-20 px-4 sm:px-6 lg:px-8 bg-black relative overflow-hidden">
+        <div class="swoosh swoosh-1"></div>
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="text-center mb-16 fade-in delay-1">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-2 section-title">Get In Touch</h2>
+                <p class="text-gray-300 mt-6 max-w-2xl mx-auto text-lg">Have a project in mind or want to collaborate? Feel free to reach out!</p>
+            </div>
+            
+            <div class="flex flex-col md:flex-row gap-12">
+                <div class="md:w-1/2 slide-right delay-2">
+                    <div class="card-glass p-8 rounded-xl">
+                        <h3 class="text-2xl font-bold text-white mb-6">Contact Information</h3>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="bg-crimson p-3 rounded-lg mr-4">
+                                    <i class="fas fa-envelope text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-medium mb-1">Email</h4>
+                                    <p class="text-gray-300">relentoor@gmail.com</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-indigo-500 p-3 rounded-lg mr-4">
+                                    <i class="fab fa-discord text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-medium mb-1">Discord</h4>
+                                    <p class="text-gray-300">@agentzzrp</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-gray-600 p-3 rounded-lg mr-4">
+                                    <i class="fab fa-github text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-medium mb-1">GitHub</h4>
+                                    <a href="https://github.com/relentiousdragon" target="_blank" class="text-crimson-light hover:underline">github.com/agentzzrp</a>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-blue-400 p-3 rounded-lg mr-4">
+                                    <i class="fas fa-globe text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-medium mb-1">Website</h4>
+                                    <a href="https://agent.is-a.dev" target="_blank" class="text-crimson-light hover:underline">agent.is-a.dev</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="cheese-container mt-8">
+                            <img src="https://cdn.discordapp.com/emojis/1291257144892461128.webp?size=64&quality=lossless" 
+                                 alt="Cheese" 
+                                 class="cheese" 
+                                 id="cheese">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2 slide-left delay-2">
+                    <div class="card-glass p-8 rounded-xl">
+                        <h3 class="text-2xl font-bold text-white mb-6">Send Me a Message</h3>
+                        <form id="contact-form" class="space-y-6">
+                            <div>
+                                <label for="name" class="block text-gray-300 mb-2">Your Name</label>
+                                <input type="text" id="name" name="name" class="w-full px-4 py-3 bg-black-light border border-gray-800 rounded-md focus:outline-none focus:ring-2 focus:ring-crimson text-white" required>
+                            </div>
+                            <div>
+                                <label for="email" class="block text-gray-300 mb-2">Your Email</label>
+                                <input type="email" id="email" name="email" class="w-full px-4 py-3 bg-black-light border border-gray-800 rounded-md focus:outline-none focus:ring-2 focus:ring-crimson text-white" required>
+                            </div>
+                            <div>
+                                <label for="subject" class="block text-gray-300 mb-2">Subject</label>
+                                <input type="text" id="subject" name="subject" class="w-full px-4 py-3 bg-black-light border border-gray-800 rounded-md focus:outline-none focus:ring-2 focus:ring-crimson text-white" required>
+                            </div>
+                            <div>
+                                <label for="message" class="block text-gray-300 mb-2">Message</label>
+                                <textarea id="message" name="message" rows="5" class="w-full px-4 py-3 bg-black-light border border-gray-800 rounded-md focus:outline-none focus:ring-2 focus:ring-crimson text-white" required></textarea>
+                            </div>
+                            <button type="submit" class="w-full btn-primary px-6 py-4 rounded-md text-white font-medium">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-12 px-4 sm:px-6 lg:px-8 bg-black-light">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <span class="text-xl font-bold text-white">Agent</span>
+                    <p class="text-gray-400 mt-2">Full-stack developer & bot creator</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="https://github.com/relentiousdragon" target="_blank" class="text-gray-400 hover:text-white transition text-2xl">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://discord.com/users/715480269179584588" target="_blank" class="text-gray-400 hover:text-white transition text-2xl">
+                        <i class="fab fa-discord"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 Termux Labs. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="alert-success" class="alert alert-success">
+        <i class="fas fa-check-circle"></i>
+        <span>Thank you for your message! I will get back to you soon.</span>
+    </div>
+    
+    <div id="alert-error" class="alert alert-error">
+        <i class="fas fa-exclamation-circle"></i>
+        <span>An error occurred while sending your message. Please try again later.</span>
+    </div>
+    
+    <div id="alert-warning" class="alert alert-warning">
+        <i class="fas fa-exclamation-triangle"></i>
+        <span>Please fill in all required fields.</span>
+    </div>
+    
+    <div id="alert-info" class="alert alert-info">
+        <i class="fas fa-info-circle"></i>
+        <span>Sending your message...</span>
+    </div>
+
+    <script>
+        VANTA.NET({
+            el: "#vanta-bg",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0xdc2626,
+            backgroundColor: 0xa0a0a,
+            points: 12.00,
+            maxDistance: 20.00,
+            spacing: 15.00
+        });
+
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const hamburger = document.querySelector('.hamburger');
+
+        menuToggle.addEventListener('click', function() {
+            mobileMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenu.classList.remove('active');
+                hamburger.classList.remove('active');
+            });
+        });
+
+        const termuxlabsBtn = document.getElementById('termuxlabs-btn');
+        const termuxlabsModal = document.getElementById('termuxlabs-modal');
+        const closeModal = document.getElementById('close-modal');
+
+        termuxlabsBtn.addEventListener('click', function() {
+            termuxlabsModal.classList.add('active');
+        });
+
+        closeModal.addEventListener('click', function() {
+            termuxlabsModal.classList.remove('active');
+        });
+
+        termuxlabsModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('active');
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var typed = new Typed('#typed', {
+                strings: [
+                    'Discord Bot Developer',
+                    'Web Developer',
+                    'JavaScript Enthusiast',
+                    'Discord Bot Developer',
+                    'Web Developer',
+                    'JavaScript Enthusiast',
+                    'Discord Bot Developer',
+                    'Web Developer',
+                    'JavaScript Enthusiast',
+                    'Discord Bot Developer',
+                    'Web Developer',
+                    'JavaScript Enthusiast',
+                    'Discord Bot Developer',
+                    'Web Developer',
+                    'JavaScript Enthusiast',
+                    'Discord Bot Developer',
+                    'Web Developer',
+                    'JavaScript Enthusiast',
+                    'Discord Bot Developer',
+                    'Web Developer',
+                    'JavaScript Enthusiast',
+                    'Discord Bot Developer',
+                    'Web Developer',
+                    'JavaScript Enthusiast',
+                    'Discord Bot Developer',
+                    'Web Developer',
+                    'JavaScript Enthusiast',
+                    'Discord Bot Developer',
+                    'Web Developer',
+                    'JavaScript Enthusiast',
+                    '... Why are you still here?',
+                    '... Join Chez Bot Community: https://discord.gg/rapuWKmZAh',
+                    '... DM me the word "Chez"',
+                ],
+                typeSpeed: 50,
+                backSpeed: 30,
+                loop: true,
+                showCursor: true,
+                cursorChar: '|',
+                smartBackspace: true
+            });
+        });
+
+        async function fetchDiscordStatus() {
+            try {
+                const response = await fetch(`https://api.lanyard.rest/v1/users/715480269179584588`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    const user = data.data;
+                    const statusElement = document.getElementById('discord-status');
+                    const statusTextElement = document.getElementById('discord-status-text');
+                    
+                    statusElement.classList.remove('status-online', 'status-idle', 'status-dnd', 'status-offline');
+                    
+                    switch(user.discord_status) {
+                        case 'online':
+                            statusElement.classList.add('status-online');
+                            statusTextElement.textContent = 'Online';
+                            break;
+                        case 'idle':
+                            statusElement.classList.add('status-idle');
+                            statusTextElement.textContent = 'Idle';
+                            break;
+                        case 'dnd':
+                            statusElement.classList.add('status-dnd');
+                            statusTextElement.textContent = 'Do Not Disturb';
+                            break;
+                        default:
+                            statusElement.classList.add('status-offline');
+                            statusTextElement.textContent = 'Offline';
+                    }
+                    
+                    if (user.activities && user.activities.length > 0) {
+                        const activity = user.activities.find(a => a.type === 0);
+                        if (activity) {
+                            statusTextElement.textContent += ` | ${activity.name}`;
+                            if (activity.details) {
+                                statusTextElement.textContent += `: ${activity.details}`;
+                            }
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching Discord status:', error);
+            }
+        }
+
+        fetchDiscordStatus();
+        
+        setInterval(fetchDiscordStatus, 30000);
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        link.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                }
+            });
+        });
+
+document.getElementById('contact-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const subject = document.getElementById('subject').value.trim();
+    const message = document.getElementById('message').value.trim();
+    
+    if (!name || !email || !subject || !message) {
+        showAlert('warning');
+        return;
+    }
+    
+    if (subject.length > 25) {
+        showAlert('warning', 'Subject must be 25 characters or less');
+        return;
+    }
+    
+    if (message.length > 1500) {
+        showAlert('warning', 'Message must be 1500 characters or less');
+        return;
+    }
+    
+    showAlert('info', 'Sending your message...', 0);
+    
+    try {
+        const response = await fetch('http://fi6.bot-hosting.net:21004/msg', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name: name,
+                email: email,
+                subject: subject,
+                message: message
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+            showAlert('success', data.message || 'Message sent successfully!');
+            this.reset();
+        } else {
+            showAlert('error', data.error || 'Failed to send message');
+        }
+    } catch (error) {
+        console.error('Error sending message:', error);
+        showAlert('error', 'Network error. Please try again later.');
+    } finally {
+        const infoAlert = document.getElementById('alert-info');
+        infoAlert.classList.remove('show');
+        infoAlert.classList.add('hide');
+    }
+});
+
+function showAlert(type, message = null, duration = 3000) {
+    document.querySelectorAll('.alert').forEach(alert => {
+        alert.classList.remove('show');
+        alert.classList.add('hide');
+    });
+    
+    const alert = document.getElementById(`alert-${type}`);
+    if (message) {
+        alert.querySelector('span').textContent = message;
+    }
+    alert.classList.remove('hide');
+    alert.classList.add('show');
+    
+    if (duration > 0) {
+        setTimeout(() => {
+            alert.classList.remove('show');
+            setTimeout(() => {
+                alert.classList.add('hide');
+            }, 300);
+        }, duration);
+    }
+}
+
+        window.addEventListener('scroll', function() {
+            const scrollPosition = window.scrollY;
+            
+            document.querySelectorAll('section').forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                const sectionHeight = section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+                
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${sectionId}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        });
+
+        const skillBadges = document.querySelectorAll('.skill-badge');
+        skillBadges.forEach((badge, index) => {
+            badge.style.animationDelay = `${index * 0.1}s`;
+        });
+
+        function createFireParticles() {
+            const banner = document.getElementById('chez-bot-banner');
+            const particleCount = 15;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('fire-particle');
+                
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                
+                const size = Math.random() * 4 + 4;
+                
+                const duration = Math.random() * 3 + 2;
+              
+                const delay = Math.random() * 5;
+                
+                particle.style.left = `${posX}%`;
+                particle.style.top = `${posY}%`;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.animation = `fireFloat ${duration}s ease-in-out ${delay}s infinite`;
+                
+                banner.appendChild(particle);
+            }
+        }
+
+        function createStarParticles() {
+            const banner = document.getElementById('lunar-banner');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('star-particle');
+                
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                
+                const size = Math.random() * 3 + 1;
+                
+                const duration = Math.random() * 5 + 5;
+                
+                const delay = Math.random() * 10;
+                
+                const opacity = Math.random() * 0.8 + 0.2;
+                
+                particle.style.left = `${posX}%`;
+                particle.style.top = `${posY}%`;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.opacity = opacity;
+                particle.style.animation = `starTwinkle ${duration}s ease-in-out ${delay}s infinite`;
+                
+                banner.appendChild(particle);
+            }
+        }
+
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes fireFloat {
+                0% {
+                    transform: translateY(0) translateX(0);
+                    opacity: 0;
+                }
+                50% {
+                    opacity: 0.8;
+                }
+                100% {
+                    transform: translateY(-100px) translateX(${Math.random() > 0.5 ? '-' : ''}${Math.random() * 30}px);
+                    opacity: 0;
+                }
+            }
+            
+            @keyframes starTwinkle {
+                0%, 100% { opacity: 0.2; transform: scale(1); }
+                50% { opacity: 1; transform: scale(1.5); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        window.addEventListener('load', function() {
+            createFireParticles();
+            createStarParticles();
+        });
+
+        const cheese = document.getElementById('cheese');
+        let cheeseHealth = 10;
+        let cheeseClicks = 0;
+        const cheeseSound = new Audio('https://www.myinstants.com/media/sounds/mmm-cheezburger.mp3');
+        
+        cheese.addEventListener('click', function() {
+            cheeseSound.currentTime = 0;
+            cheeseSound.play();
+            
+            cheeseClicks++;
+            
+            if (cheeseClicks >= 10) {
+                window.location.href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
+                return;
+            }
+            
+            //cheeseHealth--;
+            
+            this.style.transform = 'scale(0.95) rotate(' + (Math.random() * 10 - 5) + 'deg)';
+            setTimeout(() => {
+                this.style.transform = 'scale(1) rotate(0deg)';
+            }, 100);
+            
+            if (cheeseHealth <= 0) {
+                this.style.display = 'none';
+                setTimeout(() => {
+                    this.style.display = 'block';
+                    cheeseHealth = 10;
+                }, 2000);
+            }
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
