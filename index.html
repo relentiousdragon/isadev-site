@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Agent - Developer Profile</title>
     <link rel="icon" type="image/png" href="https://cdn.discordapp.com/emojis/1291257144892461128.webp?size=64&quality=lossless">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -1367,7 +1367,7 @@ document.getElementById('contact-form').addEventListener('submit', async functio
     showAlert('info', 'Sending your message...', 0);
     
     try {
-        const response = await fetch('http://fi6.bot-hosting.net:21004/msg', {
+        const response = await fetch('http://monitor.livestatustracker.com/msg', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
