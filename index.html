@@ -1353,8 +1353,18 @@ document.getElementById('contact-form').addEventListener('submit', async functio
         showAlert('warning');
         return;
     }
+
+    if (name.length > 50) {
+        showAlert('warning', 'Subject must be 25 characters or less');
+        return;
+    }
+
+    if (email.length > 50) {
+        showAlert('warning', 'Subject must be 25 characters or less');
+        return;
+    }
     
-    if (subject.length > 25) {
+    if (subject.length > 100) {
         showAlert('warning', 'Subject must be 25 characters or less');
         return;
     }
