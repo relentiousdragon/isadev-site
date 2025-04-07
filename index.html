@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimum-scale=1">
     <title>Agent - Developer Profile</title>
     <link rel="icon" type="image/png" href="https://cdn.discordapp.com/emojis/1291257144892461128.webp?size=64&quality=lossless">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -43,6 +43,82 @@
         img {
   user-select: none;
   -webkit-user-drag: none;
+}
+        .no-select {
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none;    /* Firefox */
+            -ms-user-select: none;     /* IE10+ */
+            user-select: none;         /* Non-prefixed version, currently supported by Chrome, Opera, and Edge */
+        }
+        
+        .upper {
+            z-index: 100 !important;
+        }
+
+        body {
+            --mouse-x: 0;
+            --mouse-y: 0;
+        }
+        
+        .lower {
+            z-index: -2;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+        }
+        
+        body:hover {
+            --mouse-x: calc(var(--mouse-x) * 1px);
+            --mouse-y: calc(var(--mouse-y) * 1px);
+        }
+
+.project-card, 
+        .skill-badge {
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .project-card::before,
+        .skill-badge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(
+                600px circle at var(--mouse-x) var(--mouse-y), 
+                rgba(220, 38, 38, 0.4),
+                transparent 40%
+            );
+            z-index: -1;
+            border-radius: inherit;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .project-card:hover::before,
+        .skill-badge:hover::before {
+            opacity: 1;
+        }
+        
+        .card-glass:hover::before,
+        .modal-content:hover::before,
+        .cheese-container:hover::before {
+            display: none;
+        }
+        
+        .project-card > * {
+  position: relative;
+  z-index: 1;
 }
 
 .alert {
@@ -404,6 +480,15 @@
         .nav-link {
             position: relative;
         }
+
+        button, a, [onclick], [role="button"] {
+      touch-action: manipulation;
+    }
+    
+    * {
+      -webkit-user-select: none;
+      user-select: none;
+    }
         
         .nav-link::after {
             content: '';
@@ -648,8 +733,8 @@
     </div>
 
     <section id="home" class="relative min-h-screen pt-32 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        <div class="swoosh swoosh-1"></div>
-        <div class="swoosh swoosh-2"></div>
+        <!-- <div class="swoosh swoosh-1"></div> -->
+        <!-- <div class="swoosh swoosh-2"></div> -->
         
         <div class="max-w-7xl mx-auto relative z-10">
             <div class="flex flex-col md:flex-row items-center justify-between">
@@ -662,12 +747,12 @@
                         Full-stack developer specializing in Discord bots, web applications, and automation tools. 
                         Passionate about creating efficient and user-friendly shtuff.
                     </p>
-                    <div class="flex space-x-4">
+                    <div class="flex space-x-4 upper">
                         <a href="#projects" class="btn-primary px-8 py-4 rounded-md text-white font-medium">View Projects</a>
                         <a href="#contact" class="btn-secondary px-8 py-4 rounded-md text-white font-medium">Contact Me</a>
                     </div>
                 </div>
-                <div class="md:w-1/2 flex justify-center relative slide-left delay-1">
+                <div class="md:w-1/2 flex justify-center relative slide-left delay-1 lower">
                     <div class="relative w-72 h-72 md:w-96 md:h-96 rounded-full bg-gradient-to-br from-crimson to-crimson-dark flex items-center justify-center floating">
                         <div class="absolute inset-0 rounded-full bg-crimson opacity-20 animate-ping"></div>
                         <div class="absolute inset-4 rounded-full bg-gradient-to-br from-crimson-dark to-black-light flex items-center justify-center">
@@ -1585,6 +1670,35 @@ function showAlert(type, message = null, duration = 3000) {
         document.querySelectorAll('.animate-on-scroll').forEach(el => {
             observer.observe(el);
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+                const glowElements = document.querySelectorAll('.project-card, .skill-badge');
+                
+                glowElements.forEach(element => {
+                    const glow = element.querySelector('::after') || 
+                                document.createElement('div');
+                    
+                                element.addEventListener('mousemove', (e) => {
+  const rect = element.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+
+  element.style.setProperty('--mouse-x', `${x}px`);
+  element.style.setProperty('--mouse-y', `${y}px`);
+});
+
+                    
+                    element.addEventListener('mouseleave', () => {
+                        element.style.position = 'relative';
+                        element.style.zIndex = '1';
+                        element.style.transition = 'background 0.3s ease';
+//element.style.background = 'transparent';
+                    });
+                });
+            }
+        });
+
     </script>
 </body>
 </html>
